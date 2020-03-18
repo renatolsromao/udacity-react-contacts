@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-function Contacts(props) {
-    const people = props.people
-    return (
-        <ol>
-            {people.map(person => {
-                return <li key={person.name}>{person.name}</li>
-            })}
-        </ol>
-    )
+class Contacts extends Component {
+    render () {
+        return (
+            <li key={this.props.contact.id} className='contact-list-item'>
+                <div
+                    className='contact-avatar'
+                    style={{
+                    backgroundImage: `url(${this.props.contact.avatarURL})`
+                    }}
+                ></div>
+                <div className='contact-details'>
+                    <p>{this.props.contact.name}</p>
+                    <p>{this.props.contact.handle}</p>
+                </div>
+                <button
+                    onClick={() => this.props.removeContact(this.props.contact)}
+                    className='contact-remove'>
+                    Remove
+                </button>
+            </li>
+        )
+    }
 }
 
 export default Contacts
