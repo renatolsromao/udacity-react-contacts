@@ -19,6 +19,15 @@ class App extends Component {
       })
   }
 
+  createContact = (contact) => {
+    ContactsApi.create(contact)
+      .then((contact) => {
+        this.setState((currState) => ({
+          contacts: currState.contacts.concat([contact])
+        }))
+      })
+  }
+
   removeContact = (contact) => {
     ContactsApi.remove(contact)
     
@@ -30,17 +39,22 @@ class App extends Component {
   }
 
   render () {
-    const listContactsComponent = (
+    const ListContactsComponent = (
       <ListContacts 
         contacts={this.state.contacts} 
         removeContact={this.removeContact}
       />
     )
+    const CreateContactComponent = (
+      <CreateContact
+        createContact={this.createContact}
+      />
+    )
 
     return (
       <div className="App">
-        <Route exact path='/' render={() => listContactsComponent} />
-        <Route path='/create-contact' component={CreateContact} />
+        <Route exact path='/' render={() => (ListContactsComponent)} />
+        <Route path='/create-contact' render={() => (CreateContactComponent)} />
       </div>
     )
   }
